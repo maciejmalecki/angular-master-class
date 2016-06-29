@@ -16,9 +16,10 @@
             </mat-hint>
           </mat-input-container>
           <mat-input-container fxFlex [dividerColor]="email.errors ? 'warn' : 'primary'">
-            <input matInput placeholder="Email" name="email" #email="ngModel" ngModel trmValidateEmail>
+            <input matInput placeholder="Email" name="email" #email="ngModel" ngModel trmValidateEmail trmCheckEmailAvailability>
             <mat-hint align="end" *ngIf="!email.valid && !email.pristine">
               <ng-container *ngIf="email.errors?.validateEmail">Please enter a valid email address</ng-container>
+              <ng-container *ngIf="email.errors?.emailTaken">This email address is already taken</ng-container>
             </mat-hint>
           </mat-input-container>
           <mat-input-container fxFlex>

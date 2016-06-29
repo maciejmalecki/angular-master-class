@@ -15,6 +15,7 @@ import { ContactsEditorComponent } from './contacts-editor/contacts-editor.compo
 import { ContactsCreatorComponent } from './contacts-creator/contacts-creator.component';
 
 import { EmailValidatorDirective } from './email-validator.directive';
+import { EmailAvailabilityValidatorDirective } from './email-availability-validator.directive';
 
 import { ContactsService } from './contacts.service';
 
@@ -28,7 +29,8 @@ import { API_ENDPOINT } from './app.tokens';
     ContactsDetailComponent,
     ContactsEditorComponent,
     ContactsCreatorComponent,
-    EmailValidatorDirective
+    EmailValidatorDirective,
+    EmailAvailabilityValidatorDirective
   ],
   imports: [
     BrowserModule,

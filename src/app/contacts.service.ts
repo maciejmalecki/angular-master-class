@@ -9,6 +9,7 @@ import { Contact } from './models/contact';
 
 interface ContactResponse  { item  : Contact    }
 interface ContactsResponse { items : Contact[]  }
+interface EmailAvailableResponse { msg?: string, error?: boolean }
 
 
 @Injectable()
@@ -35,5 +36,9 @@ export class ContactsService {
   addContact(contact: Contact): Observable<Contact> {
     return this.http.post<ContactResponse>(`${this.apiEndpoint}/contacts`, contact)
         .pipe(map(data => data.item));
+  }
+
+  isEmailAvailable(email: string) {
+    return this.http.get<EmailAvailableResponse>(`${this.apiEndpoint}/check-email?email=${email}`);
   }
 }
