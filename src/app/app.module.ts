@@ -20,6 +20,10 @@ import { ContactsService } from './contacts.service';
 import { APP_ROUTES } from './app.routes';
 import { API_ENDPOINT } from './app.tokens';
 
+export function confirmNavigationGuard(component) {
+  return !component.warnOnClosing || window.confirm('Navigate away without saving?');
+}
+
 @NgModule({
   declarations: [
     ContactsAppComponent,
@@ -40,7 +44,8 @@ import { API_ENDPOINT } from './app.tokens';
   ],
   providers: [
     ContactsService,
-    { provide: API_ENDPOINT, useValue: 'http://localhost:4201/api' }
+    { provide: API_ENDPOINT, useValue: 'http://localhost:4201/api' },
+    { provide: 'ConfirmNavigationGuard', useValue: confirmNavigationGuard }
   ],
   bootstrap: [ContactsAppComponent]
 })
