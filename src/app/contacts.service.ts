@@ -11,6 +11,11 @@ interface ContactResponse  { item  : Contact    }
 interface ContactsResponse { items : Contact[]  }
 
 
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
+
 @Injectable()
 export class ContactsService {
 
@@ -32,7 +37,13 @@ export class ContactsService {
         .pipe(map(data => data.item));
   }
 
-  search(term: string) : Observable<Array<Contact>> {
+  search(term: Observable<string>, debounceMs = 400) : Observable<Array<Contact>> {
+    return term.debounceTime(debounceMs)
+                .distinctUntilChanged()
+                .switchMap(term => this.rawSearch(<string>term));
+  }
+
+  rawSearch(term: string) {
     return this.http.get<ContactsResponse>(`${this.apiEndpoint}/search?text=${term}`)
                     .pipe(map(data => data.items));
   }

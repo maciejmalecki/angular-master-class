@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { debounceTime, delay, distinctUntilChanged, merge, switchMap, takeUntil } from 'rxjs/operators';
+import { merge } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 import { Contact } from '../models/contact';
 import { ContactsService } from '../contacts.service';
@@ -18,15 +18,9 @@ export class ContactsListComponent implements OnInit {
   constructor(private contactsService: ContactsService) {}
 
   ngOnInit () {
-    this.contacts$ = this.terms$.pipe(
-      debounceTime(400),
-      distinctUntilChanged(),
-      switchMap(term => this.contactsService.search(term)),
-      merge(this.contactsService.getContacts().pipe(
-        delay(5000),
-        takeUntil(this.terms$)
-      ))
-    );
+    this.contacts$ = this.contactsService
+      .search(this.terms$)
+      .pipe(merge(this.contactsService.getContacts()));
   }
 
   trackByContactId(index, contact) {
