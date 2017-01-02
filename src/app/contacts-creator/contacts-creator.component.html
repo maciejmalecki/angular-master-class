@@ -15,8 +15,11 @@
               <ng-container *ngIf="name.errors?.minlength">A name must have at least {{name.errors.minlength.requiredLength}} characters</ng-container>
             </mat-hint>
           </mat-input-container>
-          <mat-input-container fxFlex>
-            <input matInput placeholder="Email" name="email" ngModel>
+          <mat-input-container fxFlex [dividerColor]="email.errors ? 'warn' : 'primary'">
+            <input matInput placeholder="Email" name="email" #email="ngModel" ngModel trmValidateEmail>
+            <mat-hint align="end" *ngIf="!email.valid && !email.pristine">
+              <ng-container *ngIf="email.errors?.validateEmail">Please enter a valid email address</ng-container>
+            </mat-hint>
           </mat-input-container>
           <mat-input-container fxFlex>
             <input matInput placeholder="Birthday" name="birthday" ngModel type="date">
