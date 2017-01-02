@@ -1,6 +1,6 @@
 <mat-toolbar>
   <mat-input-container dividerColor="accent" class="trm-search-container">
-    <input matInput (input)="search($event.target.value)" type="text">
+    <input matInput (input)="terms$.next($event.target.value)" type="text">
   </mat-input-container>
   <mat-icon color="accent">search</mat-icon>
 </mat-toolbar>
