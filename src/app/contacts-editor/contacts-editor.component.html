@@ -22,6 +22,12 @@
         <mat-input-container fxFlex>
           <input matInput placeholder="Birthday" name="birthday" [(ngModel)]="contact.birthday" type="date">
         </mat-input-container>
+        <label class="gender-label">Gender:</label>
+        <mat-radio-group name="gender" [(ngModel)]="contact.gender">
+          <mat-radio-button *ngFor="let variant of gender" [value]="variant">
+            {{variant}}
+          </mat-radio-button>
+        </mat-radio-group>
         <fieldset fxLayout="column">
           <legend>Address</legend>
           <mat-input-container fxFlex>
@@ -33,6 +39,9 @@
           <mat-input-container fxFlex>
             <input matInput placeholder="City" name="city" [(ngModel)]="contact.address.city">
           </mat-input-container>
+          <mat-select placeholder="Country" name="country" [(ngModel)]="contact.address.country">
+            <mat-option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</mat-option>
+          </mat-select>
         </fieldset>
       </div>
     </mat-card-content>

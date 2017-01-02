@@ -1,0 +1,55 @@
+<div class="trm-contacts-creator">
+  <form #form="ngForm" (ngSubmit)="save(form.value)">
+    <mat-card>
+      <mat-card-title-group>
+        <img mat-card-md-image alt="Placeholder image" src="/assets/images/placeholder.png">
+        <mat-card-title></mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-card-content>
+        <div fxLayout="column">
+          <mat-input-container fxFlex>
+            <input matInput placeholder="Name" name="name" ngModel>
+          </mat-input-container>
+          <mat-input-container fxFlex>
+            <input matInput placeholder="Email" name="email" ngModel>
+          </mat-input-container>
+          <mat-input-container fxFlex>
+            <input matInput placeholder="Birthday" name="birthday" ngModel type="date">
+          </mat-input-container>
+          <mat-input-container fxFlex>
+            <input matInput placeholder="Phone" name="phone" ngModel>
+          </mat-input-container>
+          <mat-input-container fxFlex>
+            <input matInput placeholder="Website" name="website" ngModel>
+          </mat-input-container>
+          <label class="gender-label">Gender:</label>
+          <mat-radio-group name="gender" ngModel>
+            <mat-radio-button *ngFor="let variant of gender" [value]="variant">
+              {{variant}}
+            </mat-radio-button>
+          </mat-radio-group>
+          <fieldset ngModelGroup="address" fxLayout="column">
+            <legend>Address</legend>
+            <mat-input-container fxFlex>
+              <input matInput placeholder="Street" name="street" ngModel>
+            </mat-input-container>
+            <mat-input-container fxFlex>
+              <input matInput placeholder="Zip" name="zip" ngModel>
+            </mat-input-container>
+            <mat-input-container fxFlex>
+              <input matInput placeholder="City" name="city" ngModel>
+            </mat-input-container>
+            <mat-select placeholder="Country" name="country" ngModel>
+              <mat-option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</mat-option>
+            </mat-select>
+          </fieldset>
+        </div>
+      </mat-card-content>
+      <mat-card-actions fxLayout fxLayoutAlign="center center">
+        <button mat-button type="submit" title="Save contact">Save</button>
+        <a mat-button title="Cancel creating new contact" routerLink="/">Cancel</a>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

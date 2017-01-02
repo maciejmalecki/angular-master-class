@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Contact } from '../models/contact';
 import { ContactsService } from '../contacts.service';
+import { COUNTRIES_DATA } from '../data/countries-data';
+import { GENDER } from '../data/gender';
 
 @Component({
   selector: 'trm-contacts-editor',
@@ -12,6 +14,9 @@ export class ContactsEditorComponent implements OnInit {
 
   // we need to initialize since we can't use ?. operator with ngModel
   contact: Contact = <Contact>{ address: {}};
+
+  countries = COUNTRIES_DATA;
+  gender = GENDER;
 
   constructor(private contactsService: ContactsService,
               private router: Router,

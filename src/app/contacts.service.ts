@@ -32,4 +32,8 @@ export class ContactsService {
         .pipe(map(data => data.item));
   }
 
+  addContact(contact: Contact): Observable<Contact> {
+    return this.http.post<ContactResponse>(`${this.apiEndpoint}/contacts`, contact)
+        .pipe(map(data => data.item));
+  }
 }
