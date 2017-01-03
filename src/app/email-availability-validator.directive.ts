@@ -1,10 +1,16 @@
 import { Directive, forwardRef } from '@angular/core';
 import { FormControl, NG_ASYNC_VALIDATORS } from '@angular/forms';
+import { of } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
 import { ContactsService } from './contacts.service';
 
-export function checkEmailAvailability(contactsService: ContactsService) {
+import 'rxjs/add/observable/of';
+
+export function checkEmailAvailability(contactsService: ContactsService, allowedEmail?: string) {
   return (c: FormControl) => {
+    if (allowedEmail && allowedEmail === c.value) {
+      return of(null);
+    }
     return contactsService.isEmailAvailable(c.value).pipe(
       // Async validators emit either `null` when valid
       // or an object which provides additional information
