@@ -27,7 +27,7 @@ export class ContactsEditorComponent implements OnInit {
     this.goToDetails(contact);
   }
 
-  save (contact: Contact) {
+  save(contact: Contact) {
     this.warnOnClosing = false;
     this.contactsService.updateContact(contact)
                         .subscribe(() => this.goToDetails(contact));

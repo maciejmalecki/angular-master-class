@@ -4,6 +4,8 @@ import { ContactsEditorComponent } from './contacts-editor/contacts-editor.compo
 import { ContactsDashboardComponent } from './contacts-dashboard/contacts-dashboard.component';
 import { AboutComponent } from './about/about.component';
 
+import { CanDeactivateContactsEditorGuard } from './contacts-editor/can-deactivate-contacts-editor.guard';
+
 export const APP_ROUTES: Routes = [
   {
     path: '',
@@ -14,7 +16,7 @@ export const APP_ROUTES: Routes = [
       {
         path: 'contact/:id/edit',
         component: ContactsEditorComponent,
-        canDeactivate: ['ConfirmNavigationGuard']
+        canDeactivate: [CanDeactivateContactsEditorGuard]
       }
     ]
   },
