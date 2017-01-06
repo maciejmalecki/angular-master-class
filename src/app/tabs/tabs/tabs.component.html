@@ -1,0 +1,10 @@
+<nav mat-tab-nav-bar>
+    <button type="button" mat-button mat-tab-link
+       *ngFor="let tab of tabs"
+       [class.disabled]="!tab.selected"
+       [active]="tab.selected"
+       (click)="select(tab)">
+       {{  tab.title }}
+    </button>
+</nav>
+<ng-content></ng-content>
