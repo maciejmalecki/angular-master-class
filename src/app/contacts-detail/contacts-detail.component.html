@@ -22,8 +22,8 @@
       </dl>
     </mat-card-content>
     <mat-card-actions fxLayout fxLayoutAlign="center center">
-      <a mat-button [routerLink]="['edit']" title="Edit {{contact?.name}}">Edit</a>
-      <a mat-button routerLink="/" title="Go back to list">Go Back</a>
+      <button mat-button type="button" (click)="edit.emit(contact)">Edit</button>
+      <button mat-button type="button" (click)="back.emit()">Go Back</button>
     </mat-card-actions>
   </mat-card>
 </div>

@@ -11,6 +11,7 @@ import { ContactsMaterialModule } from './contacts-material.module';
 import { ContactsAppComponent } from './app.component';
 import { ContactsListComponent } from './contacts-list/contacts-list.component';
 import { ContactsDetailComponent } from './contacts-detail/contacts-detail.component';
+import { ContactsDetailViewComponent } from './contacts-detail-view/contacts-detail-view.component';
 import { ContactsEditorComponent } from './contacts-editor/contacts-editor.component';
 
 import { ContactsService } from './contacts.service';
@@ -22,6 +23,7 @@ import { API_ENDPOINT } from './app.tokens';
   declarations: [
     ContactsAppComponent,
     ContactsListComponent,
+    ContactsDetailViewComponent,
     ContactsDetailComponent,
     ContactsEditorComponent
   ],
