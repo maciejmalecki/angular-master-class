@@ -16,6 +16,7 @@ import { ContactsEditorComponent } from './contacts-editor/contacts-editor.compo
 import { TabsComponent, TabComponent } from './tabs';
 
 import { ContactsService } from './contacts.service';
+import { EventBusService } from './event-bus.service';
 
 import { APP_ROUTES } from './app.routes';
 import { API_ENDPOINT } from './app.tokens';
@@ -41,6 +42,7 @@ import { API_ENDPOINT } from './app.tokens';
   ],
   providers: [
     ContactsService,
+    EventBusService,
     { provide: API_ENDPOINT, useValue: 'http://localhost:4201/api' }
   ],
   bootstrap: [ContactsAppComponent]
