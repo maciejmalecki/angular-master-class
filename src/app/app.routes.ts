@@ -30,7 +30,7 @@ export const APP_ROUTES: Routes = [
       }
     ]
   },
-  { path: 'about', component: AboutComponent },
+  { path: 'about', loadChildren: './about/about.module#AboutModule' },
   // Wildcard route serves as fallback route and has to be
   // the last defined route in this list.
   { path: '**', redirectTo: '/' }
