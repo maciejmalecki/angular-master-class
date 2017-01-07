@@ -12,6 +12,8 @@ import { ContactsAppComponent } from './app.component';
 import { ContactsListComponent } from './contacts-list/contacts-list.component';
 import { ContactsDetailComponent } from './contacts-detail/contacts-detail.component';
 import { ContactsEditorComponent } from './contacts-editor/contacts-editor.component';
+import { ContactsDashboardComponent } from './contacts-dashboard/contacts-dashboard.component';
+import { AboutComponent } from './about/about.component';
 
 import { ContactsService } from './contacts.service';
 
@@ -23,7 +25,9 @@ import { API_ENDPOINT } from './app.tokens';
     ContactsAppComponent,
     ContactsListComponent,
     ContactsDetailComponent,
-    ContactsEditorComponent
+    ContactsEditorComponent,
+    ContactsDashboardComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
