@@ -25,9 +25,15 @@
           <mat-input-container fxFlex>
             <input matInput placeholder="Birthday" formControlName="birthday" type="date">
           </mat-input-container>
-          <mat-input-container fxFlex>
-            <input matInput placeholder="Phone" formControlName="phone">
-          </mat-input-container>
+          <div formArrayName="phone">
+            <div *ngFor="let phone of form.get('phone').controls; let i = index; let l = last;">
+              <mat-input-container>
+                <input matInput placeholder="Phone" [formControlName]="i">
+              </mat-input-container>
+              <button mat-icon-button type="button" *ngIf="i >= 1" (click)="removePhoneField(i)"><mat-icon>highlight_off</mat-icon></button>
+              <button mat-icon-button type="button" *ngIf="l && phone.value != ''" (click)="addPhoneField()"><mat-icon>add_circle_outline</mat-icon></button>
+            </div>
+          </div>
           <mat-input-container fxFlex>
             <input matInput placeholder="Website" formControlName="website">
           </mat-input-container>

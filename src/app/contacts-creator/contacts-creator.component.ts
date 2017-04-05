@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ContactsService } from '../contacts.service';
 import { Contact } from '../models/contact';
 import { COUNTRIES_DATA } from '../data/countries-data';
@@ -26,12 +26,14 @@ export class ContactsCreatorComponent implements OnInit {
       private contactsService: ContactsService,
       private formBuilder: FormBuilder) {}
 
+
   ngOnInit() {
+
     this.form = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', validateEmail, checkEmailAvailability(this.contactsService)],
-      phone: '',
       gender: '',
+      phone: this.formBuilder.array(['']),
       birthday: '',
       website: '',
       address: this.formBuilder.group({
@@ -41,6 +43,16 @@ export class ContactsCreatorComponent implements OnInit {
         country: ''
       })
     });
+  }
+
+  removePhoneField(index) {
+    const control = <FormArray>this.form.get('phone');
+    control.removeAt(index);
+  }
+
+  addPhoneField() {
+    const control = <FormArray>this.form.get('phone');
+    control.push(new FormControl(''));
   }
 
   save(value: Contact) {

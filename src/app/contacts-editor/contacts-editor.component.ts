@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Contact } from '../models/contact';
 import { ContactsService } from '../contacts.service';
 import { COUNTRIES_DATA } from '../data/countries-data';
@@ -31,8 +31,8 @@ export class ContactsEditorComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', validateEmail],
-      phone: '',
       gender: '',
+      phone: this.formBuilder.array(['']),
       birthday: '',
       website: '',
       address: this.formBuilder.group({
@@ -48,8 +48,25 @@ export class ContactsEditorComponent implements OnInit {
         .subscribe(contact => {
           this.contact = contact;
           this.form.get('email').setAsyncValidators(checkEmailAvailability(this.contactsService, this.contact.email));
+          // patch phone property to always be an array
+          contact.phone = contact.phone instanceof Array ? contact.phone : [contact.phone];
           this.form.patchValue(contact);
+
+          // We replace the control to enforce setting the new value, because
+          // patchValue() ignores the `phone` form field because it already has a value
+          // (empty array)
+          this.form.setControl('phone', this.formBuilder.array(contact.phone));
         });
+  }
+
+  removePhoneField(index) {
+    const control = <FormArray>this.form.get('phone');
+    control.removeAt(index);
+  }
+
+  addPhoneField() {
+    const control = <FormArray>this.form.get('phone');
+    control.push(new FormControl(''));
   }
 
   cancel() {
