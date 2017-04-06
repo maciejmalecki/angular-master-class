@@ -43,21 +43,7 @@
               {{variant}}
             </mat-radio-button>
           </mat-radio-group>
-          <fieldset fxLayout="column" formGroupName="address">
-            <legend>Address</legend>
-            <mat-input-container fxFlex>
-              <input matInput placeholder="Street" formControlName="street">
-            </mat-input-container>
-            <mat-input-container fxFlex>
-              <input matInput placeholder="Zip" formControlName="zip">
-            </mat-input-container>
-            <mat-input-container fxFlex>
-              <input matInput placeholder="City" formControlName="city">
-            </mat-input-container>
-            <mat-select placeholder="Country" formControlName="country">
-              <mat-option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</mat-option>
-            </mat-select>
-          </fieldset>
+          <trm-address-input formControlName="address"></trm-address-input>
         </div>
       </mat-card-content>
       <mat-card-actions fxLayout fxLayoutAlign="center center">

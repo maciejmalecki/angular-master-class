@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormArray, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Contact } from '../models/contact';
 import { ContactsService } from '../contacts.service';
 import { COUNTRIES_DATA } from '../data/countries-data';
@@ -35,18 +35,19 @@ export class ContactsEditorComponent implements OnInit {
       phone: this.formBuilder.array(['']),
       birthday: '',
       website: '',
-      address: this.formBuilder.group({
+      address: [{
         street: '',
         zip: '',
         city: '',
         country: ''
-      })
+      }]
     });
 
     this.contactsService
         .getContact(this.route.snapshot.paramMap.get('id'))
         .subscribe(contact => {
           this.contact = contact;
+
           this.form.get('email').setAsyncValidators(checkEmailAvailability(this.contactsService, this.contact.email));
           // patch phone property to always be an array
           contact.phone = contact.phone instanceof Array ? contact.phone : [contact.phone];

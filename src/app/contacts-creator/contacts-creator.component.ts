@@ -36,12 +36,12 @@ export class ContactsCreatorComponent implements OnInit {
       phone: this.formBuilder.array(['']),
       birthday: '',
       website: '',
-      address: this.formBuilder.group({
+      address: [{
         street: '',
         zip: '',
         city: '',
         country: ''
-      })
+      }]
     });
   }
 
