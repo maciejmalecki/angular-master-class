@@ -8,10 +8,10 @@ import { ContactsService } from "./contacts.service";
 import { Contact } from 'app/models/contact';
 
 import { ApplicationState } from "./state";
+import { ContactsQuery } from './state/contacts/contacts.reducer';
 
 import {
   SelectContactAction,
-  LoadContactsSuccessAction,
   AddContactAction
 } from './state/contacts/contacts.actions';
 
@@ -24,7 +24,7 @@ export class ContactExistsGuard implements CanActivate {
     let contactId = route.paramMap.get('id');
     this.store.dispatch(new SelectContactAction(contactId));
 
-    return this.store.select(state => state.contacts.loaded).pipe(
+    return this.store.select(ContactsQuery.getLoaded).pipe(
       take(1),
       switchMap(loaded => {
         let addContactToList = (contact: Contact) => this.store.dispatch(new AddContactAction(contact));

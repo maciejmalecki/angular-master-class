@@ -8,6 +8,7 @@ import { ContactsService } from '../contacts.service';
 
 import { ApplicationState } from '../state';
 import { UpdateContactAction } from '../state/contacts/contacts.actions';
+import { ContactsQuery } from '../state/contacts/contacts.reducer';
 
 @Component({
   selector: 'trm-contacts-editor',
@@ -23,16 +24,7 @@ export class ContactsEditorComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.contact$ = this.store.select(state => {
-      let id = state.contacts.selectedContactId;
-      let contact = state.contacts.list.find(contact => contact.id == id);
-
-      /**
-       * We need to clone the contact object to avoid direct state mutations
-       * via two-way data bindings using [(ngModel)]
-       */
-      return Object.assign({}, contact);
-    });
+    this.contact$ = this.store.select(ContactsQuery.getSelectedContact);
   }
 
   cancel(contact: Contact) {

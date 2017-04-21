@@ -16,7 +16,7 @@ export enum ContactsActionTypes {
   LOAD_CONTACTS_SUCCESS = '[Contacts] Load Contacts Success',
   UPDATE_CONTACT = '[Contacts] Update Contact',
   SELECT_CONTACT = '[Contacts] Select Contact',
-  ADD_CONTACT    ='[Contacts] Add Contact'
+  ADD_CONTACT = '[Contacts] Add Contact'
 }
 
 export class LoadContactsSuccessAction implements Action {
