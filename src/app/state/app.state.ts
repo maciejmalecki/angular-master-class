@@ -7,4 +7,4 @@ export interface ApplicationState {
 
 export const ROOT_REDUCER: ActionReducerMap<ApplicationState> = {
   contacts: contactsReducer
-}
+};

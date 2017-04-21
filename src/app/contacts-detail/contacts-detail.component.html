@@ -1,5 +1,5 @@
 <div class="trm-contacts-detail">
-  <mat-card>
+  <mat-card *ngIf="contact$ | async as contact">
     <mat-card-title-group class="fullBleed">
       <img mat-card-md-image [src]="contact?.image || ''">
       <mat-card-title>{{contact?.name}}</mat-card-title>
@@ -8,21 +8,21 @@
     <mat-card-content>
       <dl>
         <dt>Phone:</dt>
-        <dd>{{contact?.phone || '-'}}</dd>
+        <dd>{{contact.phone || '-'}}</dd>
         <dt>Website:</dt>
-        <dd>{{contact?.website || '-'}}</dd>
+        <dd>{{contact.website || '-'}}</dd>
         <dt>Birthday:</dt>
-        <dd>{{contact?.birthday || '-'}}</dd>
+        <dd>{{contact.birthday || '-'}}</dd>
         <dt>Street:</dt>
-        <dd>{{contact?.address.street || '-'}}</dd>
+        <dd>{{contact.address.street || '-'}}</dd>
         <dt>Zip:</dt>
-        <dd>{{contact?.address.zip || '-'}}</dd>
+        <dd>{{contact.address.zip || '-'}}</dd>
         <dt>City:</dt>
-        <dd>{{contact?.address.city || '-'}}</dd>
+        <dd>{{contact.address.city || '-'}}</dd>
       </dl>
     </mat-card-content>
     <mat-card-actions fxLayout fxLayoutAlign="center center">
-      <a mat-button [routerLink]="['edit']" title="Edit {{contact?.name}}">Edit</a>
+      <a mat-button [routerLink]="['edit']" title="Edit {{contact.name}}">Edit</a>
       <a mat-button routerLink="/" title="Go back to list">Go Back</a>
     </mat-card-actions>
   </mat-card>

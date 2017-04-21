@@ -13,13 +13,25 @@ import { Contact } from '../../models/contact';
  * sure to also mark the `type` property as `readonly` on the action class.
  */
 export enum ContactsActionTypes {
-  LOAD_CONTACTS_SUCCESS = '[Contacts] Load Contacts Success'
+  LOAD_CONTACTS_SUCCESS = '[Contacts] Load Contacts Success',
+  UPDATE_CONTACT = '[Contacts] Update Contact',
+  SELECT_CONTACT = '[Contacts] Select Contact'
 }
 
 export class LoadContactsSuccessAction implements Action {
   readonly type = ContactsActionTypes.LOAD_CONTACTS_SUCCESS;
-
   constructor(public payload: Array<Contact>) { }
 }
 
-export type ContactsActions = LoadContactsSuccessAction;
+export class SelectContactAction implements Action {
+  readonly type = ContactsActionTypes.SELECT_CONTACT;
+  constructor(public payload: string) { }
+}
+
+export class UpdateContactAction implements Action {
+  readonly type = ContactsActionTypes.UPDATE_CONTACT;
+  constructor(public payload: Contact) { }
+}
+
+export type ContactsActions =
+  LoadContactsSuccessAction | SelectContactAction | UpdateContactAction;
