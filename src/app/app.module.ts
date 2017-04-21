@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 import { ContactsMaterialModule } from './contacts-material.module';
 
@@ -20,7 +22,7 @@ import { ContactExistsGuard } from './contact-exists.guard';
 import { APP_ROUTES } from './app.routes';
 import { API_ENDPOINT } from './app.tokens';
 
-import { ROOT_REDUCER } from './state';
+import { ROOT_REDUCER, META_REDUCERS } from './state';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,18 @@ import { ROOT_REDUCER } from './state';
     FlexLayoutModule,
     RouterModule.forRoot(APP_ROUTES),
     HttpClientModule,
-    StoreModule.forRoot(ROOT_REDUCER),
+    /**
+    * By default ngrx will use `combineReducers()` with the reducer map to
+    * compose a single root reducer. When providing an array of meta-reducers ngrx
+    * will take the reducer map together with the meta-reducers to compose them from
+    * right to left to form a root meta-reducer. In other words, we end up having one
+    * root reducer which will first call the meta-reducers and finally call `combineReducers`
+    * to compute the next state.
+    */
+    StoreModule.forRoot(ROOT_REDUCER, {
+      metaReducers: META_REDUCERS
+    }),
+    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 5 }) : [],
     FormsModule
   ],
   providers: [
