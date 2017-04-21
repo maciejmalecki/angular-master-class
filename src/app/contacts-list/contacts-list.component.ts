@@ -3,10 +3,9 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
 import { Contact } from '../models/contact';
-import { ContactsService } from '../contacts.service';
 
 import { ApplicationState } from '../state';
-import { LoadContactsSuccessAction } from '../state/contacts/contacts.actions';
+import { LoadContactsAction } from '../state/contacts/contacts.actions';
 import { ContactsQuery } from '../state/contacts/contacts.reducer';
 
 @Component({
@@ -18,13 +17,11 @@ export class ContactsListComponent implements OnInit {
 
   contacts$: Observable<Array<Contact>>;
 
-  constructor(private store: Store<ApplicationState>, private contactsService: ContactsService) { }
+  constructor(private store: Store<ApplicationState>) { }
 
   ngOnInit() {
     this.contacts$ = this.store.select(ContactsQuery.getContacts);
-
-    this.contactsService.getContacts()
-      .subscribe(contacts => this.store.dispatch(new LoadContactsSuccessAction(contacts)));
+    this.store.dispatch(new LoadContactsAction());
   }
 
   trackByContactId(index, contact) {

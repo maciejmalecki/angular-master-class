@@ -13,15 +13,31 @@ import { Contact } from '../../models/contact';
  * sure to also mark the `type` property as `readonly` on the action class.
  */
 export enum ContactsActionTypes {
+  LOAD_CONTACTS = '[Contacts] Load Contacts',
   LOAD_CONTACTS_SUCCESS = '[Contacts] Load Contacts Success',
   UPDATE_CONTACT = '[Contacts] Update Contact',
+  UPDATE_CONTACT_SUCCESS = '[Contacts] Update Contact Success',
   SELECT_CONTACT = '[Contacts] Select Contact',
   ADD_CONTACT = '[Contacts] Add Contact'
+}
+
+export class LoadContactsAction implements Action {
+  readonly type = ContactsActionTypes.LOAD_CONTACTS;
 }
 
 export class LoadContactsSuccessAction implements Action {
   readonly type = ContactsActionTypes.LOAD_CONTACTS_SUCCESS;
   constructor(public payload: Array<Contact>) { }
+}
+
+export class UpdateContactAction implements Action {
+  readonly type = ContactsActionTypes.UPDATE_CONTACT;
+  constructor(public payload: Contact) { }
+}
+
+export class UpdateContactSuccessAction implements Action {
+  readonly type = ContactsActionTypes.UPDATE_CONTACT_SUCCESS;
+  constructor(public payload: Contact) { }
 }
 
 export class SelectContactAction implements Action {
@@ -34,11 +50,6 @@ export class AddContactAction implements Action {
   constructor(public payload: Contact) { }
 }
 
-export class UpdateContactAction implements Action {
-  readonly type = ContactsActionTypes.UPDATE_CONTACT;
-  constructor(public payload: Contact) { }
-}
-
 export type ContactsActions =
-  LoadContactsSuccessAction | UpdateContactAction | AddContactAction |
-  SelectContactAction;
+  LoadContactsSuccessAction | LoadContactsSuccessAction | UpdateContactAction |
+  UpdateContactSuccessAction | AddContactAction | SelectContactAction;

@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
 import { ContactsMaterialModule } from './contacts-material.module';
 
@@ -18,6 +19,8 @@ import { ContactsEditorComponent } from './contacts-editor/contacts-editor.compo
 
 import { ContactsService } from './contacts.service';
 import { ContactExistsGuard } from './contact-exists.guard';
+
+import { ContactsEffects } from './state/contacts/contacts.effects';
 
 import { APP_ROUTES } from './app.routes';
 import { API_ENDPOINT } from './app.tokens';
@@ -35,9 +38,10 @@ import { ROOT_REDUCER, META_REDUCERS } from './state';
     BrowserModule,
     BrowserAnimationsModule,
     ContactsMaterialModule,
+    FormsModule,
+    HttpClientModule,
     FlexLayoutModule,
     RouterModule.forRoot(APP_ROUTES),
-    HttpClientModule,
     /**
     * By default ngrx will use `combineReducers()` with the reducer map to
     * compose a single root reducer. When providing an array of meta-reducers ngrx
@@ -49,8 +53,11 @@ import { ROOT_REDUCER, META_REDUCERS } from './state';
     StoreModule.forRoot(ROOT_REDUCER, {
       metaReducers: META_REDUCERS
     }),
-    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 5 }) : [],
-    FormsModule
+    // Provide an empty array if you don't need to register any root-level effects
+    EffectsModule.forRoot([
+      ContactsEffects
+    ]),
+    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 5 }) : []
   ],
   providers: [
     ContactsService,
