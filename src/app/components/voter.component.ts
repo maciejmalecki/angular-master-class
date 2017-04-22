@@ -3,6 +3,7 @@ import { Store } from '../store/store';
 import { ApplicationState } from '../store/root.reducer';
 import { APP_STORE } from '../store/app-store';
 import { voteYesAction, voteNoAction } from '../store/votes/vote-actions';
+import { VoterService } from 'app/store/votes/voter.service';
 
 @Component({
   selector: 'trm-voter',
@@ -25,19 +26,17 @@ import { voteYesAction, voteNoAction } from '../store/votes/vote-actions';
   ]
 })
 export class VoterComponent {
-
-  /**
-   * Inject the appstore
-   */
-  constructor(@Inject(APP_STORE) private store: Store<ApplicationState>) {
+  constructor(
+      private voteStation: VoterService,
+      @Inject(APP_STORE) private store: Store<ApplicationState>) {
   }
 
   private increment() {
-    this.store.dispatch(voteYesAction());
+    this.store.dispatch(voteYesAction(this.voteStation));
   }
 
   private decrement() {
-    this.store.dispatch(voteNoAction());
+    this.store.dispatch(voteNoAction(this.voteStation));
   }
 }
 
