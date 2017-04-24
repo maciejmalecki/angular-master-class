@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { Store } from '../store/store';
 import { ApplicationState } from '../store/root.reducer';
 import { APP_STORE } from '../store/app-store';
-import { VoteActions } from '../store/votes/vote-actions';
+import { voteYesAction, voteNoAction } from '../store/votes/vote-actions';
 
 @Component({
   selector: 'trm-voter',
@@ -33,11 +33,11 @@ export class VoterComponent {
   }
 
   private increment() {
-    this.store.dispatch({ type: VoteActions.YES });
+    this.store.dispatch(voteYesAction());
   }
 
   private decrement() {
-    this.store.dispatch({ type: VoteActions.NO });
+    this.store.dispatch(voteNoAction());
   }
 }
 
