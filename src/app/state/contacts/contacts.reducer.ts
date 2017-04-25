@@ -1,9 +1,7 @@
 import { createSelector } from '@ngrx/store';
 
 import { Contact } from '../../models/contact';
-
 import { ContactsActionTypes, ContactsActions } from '../contacts/contacts.actions';
-
 import { ApplicationState } from "../index";
 
 export interface ContactsState {

@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { Contact } from '../models/contact';
 
-import { ApplicationState } from '../state';
-import { ContactsQuery } from '../state/contacts/contacts.reducer';
+import { ContactsFacade } from '../state/contacts/contacts.facade';
 
 @Component({
   selector: 'trm-contacts-detail',
@@ -15,9 +13,9 @@ import { ContactsQuery } from '../state/contacts/contacts.reducer';
 export class ContactsDetailComponent implements OnInit {
   contact$: Observable<Contact>;
 
-  constructor(private store: Store<ApplicationState>) { }
+  constructor(private contactsFacade: ContactsFacade) { }
 
   ngOnInit() {
-    this.contact$ = this.store.select(ContactsQuery.getSelectedContact);
+    this.contact$ = this.contactsFacade.selectedContact$;
   }
 }

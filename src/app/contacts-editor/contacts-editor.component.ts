@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
 
 import { Contact } from '../models/contact';
-
-import { ApplicationState } from '../state';
-import { UpdateContactAction } from '../state/contacts/contacts.actions';
-import { ContactsQuery } from '../state/contacts/contacts.reducer';
+import { ContactsFacade } from '../state/contacts/contacts.facade';
 
 @Component({
   selector: 'trm-contacts-editor',
@@ -18,11 +14,10 @@ export class ContactsEditorComponent implements OnInit {
 
   contact$: Observable<Contact>;
 
-  constructor(private router: Router,
-    private store: Store<ApplicationState>) { }
+  constructor(private router: Router, private contactsFacade: ContactsFacade) { }
 
   ngOnInit() {
-    this.contact$ = this.store.select(ContactsQuery.getSelectedContact);
+    this.contact$ = this.contactsFacade.selectedContact$;
   }
 
   cancel(contact: Contact) {
@@ -30,7 +25,8 @@ export class ContactsEditorComponent implements OnInit {
   }
 
   save(contact: Contact) {
-    this.store.dispatch(new UpdateContactAction(contact));
+    this.contactsFacade.updateContact(contact)
+      .subscribe(() => this.router.navigate(['/contact', contact.id]));
   }
 
   private goToDetails(contact: Contact) {

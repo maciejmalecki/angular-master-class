@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
 
 import { Contact } from '../models/contact';
 
-import { ApplicationState } from '../state';
-import { LoadContactsAction } from '../state/contacts/contacts.actions';
-import { ContactsQuery } from '../state/contacts/contacts.reducer';
+import { ContactsFacade } from '../state/contacts/contacts.facade';
 
 @Component({
   selector: 'trm-contacts-list',
@@ -17,11 +14,10 @@ export class ContactsListComponent implements OnInit {
 
   contacts$: Observable<Array<Contact>>;
 
-  constructor(private store: Store<ApplicationState>) { }
+  constructor(private contactsFacade: ContactsFacade) { }
 
   ngOnInit() {
-    this.contacts$ = this.store.select(ContactsQuery.getContacts);
-    this.store.dispatch(new LoadContactsAction());
+    this.contacts$ = this.contactsFacade.getContacts();
   }
 
   trackByContactId(index, contact) {

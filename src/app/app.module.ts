@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { EffectsModule } from '@ngrx/effects';
 
 import { ContactsMaterialModule } from './contacts-material.module';
 
@@ -20,12 +19,11 @@ import { ContactsEditorComponent } from './contacts-editor/contacts-editor.compo
 import { ContactsService } from './contacts.service';
 import { ContactExistsGuard } from './contact-exists.guard';
 
-import { ContactsEffects } from './state/contacts/contacts.effects';
-
 import { APP_ROUTES } from './app.routes';
 import { API_ENDPOINT } from './app.tokens';
 
 import { ROOT_REDUCER, META_REDUCERS } from './state';
+import { ContactsFacade } from './state/contacts/contacts.facade';
 
 @NgModule({
   declarations: [
@@ -50,16 +48,11 @@ import { ROOT_REDUCER, META_REDUCERS } from './state';
     * root reducer which will first call the meta-reducers and finally call `combineReducers`
     * to compute the next state.
     */
-    StoreModule.forRoot(ROOT_REDUCER, {
-      metaReducers: META_REDUCERS
-    }),
-    // Provide an empty array if you don't need to register any root-level effects
-    EffectsModule.forRoot([
-      ContactsEffects
-    ]),
+    StoreModule.forRoot(ROOT_REDUCER, { metaReducers: META_REDUCERS }),
     !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 5 }) : []
   ],
   providers: [
+    ContactsFacade,
     ContactsService,
     { provide: API_ENDPOINT, useValue: 'http://localhost:4201/api' },
     ContactExistsGuard

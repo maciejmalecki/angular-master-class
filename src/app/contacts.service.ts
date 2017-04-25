@@ -16,7 +16,6 @@ export class ContactsService {
 
   constructor(private http: HttpClient, @Inject(API_ENDPOINT) private apiEndpoint) {}
 
-
   getContact(id: string): Observable<Contact> {
     return this.http.get<ContactResponse>(`${this.apiEndpoint}/contacts/${id}`)
         .pipe(map(data => data.item));
