@@ -6,7 +6,11 @@ import { INITIAL_VOTES_STATE, VotesState } from 'app/store/votes/vote-state';
  */
 export function voteReducer(state: VotesState = INITIAL_VOTES_STATE, action: Action) {
   switch (action.type) {
-    case VoteActions.LOADED: return {...state, counter: action.counter };
-    default:  return state;
+    case VoteActions.YES_VOTE.SUCCESS:
+    case VoteActions.NO_VOTE.SUCCESS:
+    case VoteActions.TOTAL_VOTES.SUCCESS:
+      return {...state, counter: action.payload };
+    default:
+      return state;
   }
 }
