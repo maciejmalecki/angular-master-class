@@ -11,6 +11,8 @@ import { ContactsService } from '../contacts.service';
 import { EventBusService } from '../event-bus.service';
 import { API_ENDPOINT } from '../app.tokens';
 
+import { queryFor } from '../../testing/helpers';
+
 describe('ContactsListComponent', () => {
 
   let fixture: ComponentFixture<ContactsListComponent>;
@@ -40,7 +42,7 @@ describe('ContactsListComponent', () => {
 
     fixture.detectChanges();
 
-    let viewItems = fixture.debugElement.queryAll(By.css('h3'));
+    let viewItems = queryFor(fixture, 'h3');
 
     expect(contactsService.getContacts).toHaveBeenCalled();
     expect(viewItems.length).toEqual(2);
