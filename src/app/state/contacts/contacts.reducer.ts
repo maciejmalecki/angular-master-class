@@ -1,8 +1,13 @@
 import { createSelector } from '@ngrx/store';
 
+import { ApplicationState } from "../app.state";
 import { Contact } from '../../models/contact';
-import { ContactsActionTypes, ContactsActions } from '../contacts/contacts.actions';
-import { ApplicationState } from "../index";
+import {
+  ContactsActionTypes,
+  ContactsActions,
+  AddContactAction,
+  UpdateContactSuccessAction
+} from './contacts.actions';
 
 export interface ContactsState {
   list: Array<Contact>;
@@ -28,24 +33,22 @@ export function contactsReducer(state: ContactsState = INITAL_STATE, action: Con
       return {
         ...state,
         selectedContactId: action.payload
-      }
+      };
     case ContactsActionTypes.ADD_CONTACT:
       let findInList = (contact) => contact.id == action.payload.id;
-
       let inStore = state.list.some(findInList);
+      let list = !inStore ? [...state.list, action.payload] : [...state.list];
 
-      return {
-        ...state,
-        list: !inStore ? [...state.list, action.payload] : [...state.list]
-      }
+      return { ...state, list };
     case ContactsActionTypes.UPDATE_CONTACT_SUCCESS:
-      let updatedList = state.list.map(contact => contact.id == action.payload.id
-        ? { ...contact, ...action.payload } : contact);
+      let updatedList = state.list.map(contact => {
+        return (contact.id == action.payload.id) ? { ...contact, ...action.payload } : contact;
+      });
 
       return {
         ...state,
         list: updatedList
-      }
+      };
     default:
       return state;
   }
@@ -75,9 +78,10 @@ export namespace ContactsQuery {
    * performance benefits especially with selectors that perform expensive computations.
    * This practice is also called memoization.
    */
-  export const getSelectedContact = createSelector(getContacts, getSelectedContactId, (contacts, id) => {
-    let contact = contacts.find(contact => contact.id == id);
-
-    return contact ? Object.assign({}, contact) : undefined;
-  });
+  export const getSelectedContact = createSelector(getContacts, getSelectedContactId,
+      (contacts, id) => {
+        let contact = contacts.find(contact => contact.id == id);
+        return contact ? Object.assign({}, contact) : undefined;
+      }
+  );
 }

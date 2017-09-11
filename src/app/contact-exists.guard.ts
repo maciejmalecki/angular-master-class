@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { Store } from "@ngrx/store";
 import { of } from 'rxjs/observable/of';
-import { tap, map, merge, take, switchMap } from 'rxjs/operators';
+import { map, filter, take } from 'rxjs/operators';
 
 import { ContactsFacade } from './state/contacts/contacts.facade';
 
@@ -13,7 +13,11 @@ export class ContactExistsGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot) {
     let contactId = route.paramMap.get('id');
-    return this.contactsFacade.getContact(contactId)
-      .pipe(map(contact => !!contact));
+    return this.contactsFacade
+        .getContactDetails(contactId).pipe(
+          filter(contact => !!contact),
+          take(1),
+          map(contact => !!contact)
+        );
   }
 }

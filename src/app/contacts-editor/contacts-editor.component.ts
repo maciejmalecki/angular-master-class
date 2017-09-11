@@ -10,26 +10,17 @@ import { ContactsFacade } from '../state/contacts/contacts.facade';
   templateUrl: './contacts-editor.component.html',
   styleUrls: ['./contacts-editor.component.css']
 })
-export class ContactsEditorComponent implements OnInit {
-
-  contact$: Observable<Contact>;
+export class ContactsEditorComponent {
+  contact$: Observable<Contact> = this.contactsFacade.selectedContact$;
 
   constructor(private router: Router, private contactsFacade: ContactsFacade) { }
 
-  ngOnInit() {
-    this.contact$ = this.contactsFacade.selectedContact$;
-  }
-
   cancel(contact: Contact) {
-    this.goToDetails(contact);
+    this.router.navigate(['/contact', contact.id ]);
   }
 
   save(contact: Contact) {
-    this.contactsFacade.updateContact(contact)
-      .subscribe(() => this.router.navigate(['/contact', contact.id]));
+    this.contactsFacade.updateContact(contact);
   }
 
-  private goToDetails(contact: Contact) {
-    this.router.navigate(['/contact', contact.id ]);
-  }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Contact } from '../models/contact';
-
 import { ContactsFacade } from '../state/contacts/contacts.facade';
 
 @Component({

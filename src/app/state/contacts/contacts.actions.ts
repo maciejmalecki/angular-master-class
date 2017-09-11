@@ -1,5 +1,5 @@
-import { Action } from '@ngrx/store';
 import { Contact } from '../../models/contact';
+import { Action } from '@ngrx/store';
 
 /**
  * We use a string enum here to define action types to allow for string type coercion.
@@ -13,8 +13,10 @@ import { Contact } from '../../models/contact';
  * sure to also mark the `type` property as `readonly` on the action class.
  */
 export enum ContactsActionTypes {
+  LOAD_CONTACT = '[Contacts] Load Contact',
   LOAD_CONTACTS = '[Contacts] Load Contacts',
   LOAD_CONTACTS_SUCCESS = '[Contacts] Load Contacts Success',
+  LOAD_CONTACT_DETAILS = '[Contacts] Load Contact Details',
   UPDATE_CONTACT = '[Contacts] Update Contact',
   UPDATE_CONTACT_SUCCESS = '[Contacts] Update Contact Success',
   SELECT_CONTACT = '[Contacts] Select Contact',
@@ -23,11 +25,17 @@ export enum ContactsActionTypes {
 
 export class LoadContactsAction implements Action {
   readonly type = ContactsActionTypes.LOAD_CONTACTS;
+  constructor(public payload = null) { }
 }
 
 export class LoadContactsSuccessAction implements Action {
   readonly type = ContactsActionTypes.LOAD_CONTACTS_SUCCESS;
   constructor(public payload: Array<Contact>) { }
+}
+
+export class LoadContactDetailsAction implements Action {
+  readonly type = ContactsActionTypes.LOAD_CONTACT_DETAILS;
+  constructor(public payload: string) { }
 }
 
 export class UpdateContactAction implements Action {
@@ -38,6 +46,11 @@ export class UpdateContactAction implements Action {
 export class UpdateContactSuccessAction implements Action {
   readonly type = ContactsActionTypes.UPDATE_CONTACT_SUCCESS;
   constructor(public payload: Contact) { }
+}
+
+export class LoadContactAction implements Action {
+  readonly type = ContactsActionTypes.LOAD_CONTACT;
+  constructor(public payload: string) { }
 }
 
 export class SelectContactAction implements Action {
@@ -51,5 +64,6 @@ export class AddContactAction implements Action {
 }
 
 export type ContactsActions =
-  LoadContactsSuccessAction | LoadContactsSuccessAction | UpdateContactAction |
-  UpdateContactSuccessAction | AddContactAction | SelectContactAction;
+  LoadContactsAction | LoadContactsSuccessAction | UpdateContactAction |
+  UpdateContactSuccessAction | LoadContactAction | AddContactAction |
+  SelectContactAction;

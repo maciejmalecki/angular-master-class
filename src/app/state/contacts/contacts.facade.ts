@@ -1,88 +1,123 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { map, take, tap, switchMap, withLatestFrom, catchError } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
+import { map, switchMap, withLatestFrom, mergeMap, filter } from 'rxjs/operators';
+import { Store, Action } from '@ngrx/store';
+import { Actions, Effect, toPayload } from '@ngrx/effects';
 
-import { ContactsService } from '../../contacts.service';
-import { Contact } from 'app/models/contact';
-
-import { ApplicationState } from '../index';
+import { ApplicationState } from '../app.state';
 import { ContactsQuery } from './contacts.reducer';
+import { ContactsService } from '../../contacts.service';
+import { Contact } from '../..//models/contact';
 
 import {
+  ContactsActionTypes,
   SelectContactAction,
   AddContactAction,
+  LoadContactsAction,
   LoadContactsSuccessAction,
-  UpdateContactSuccessAction
+  UpdateContactAction,
+  UpdateContactSuccessAction,
+  LoadContactDetailsAction,
+  LoadContactAction
 } from './contacts.actions';
+
+import { NoopAction } from '../app.actions';
 
 @Injectable()
 export class ContactsFacade {
+
+  // ************************************************
+  // Observable Queries available for consumption by views
+  // ************************************************
+
   loaded$ = this.store.select(ContactsQuery.getLoaded);
   contacts$ = this.store.select(ContactsQuery.getContacts);
   selectedContact$ = this.store.select(ContactsQuery.getSelectedContact);
 
-  constructor(private store: Store<ApplicationState>,
-    private contactsService: ContactsService) { }
+  // ************************************************
+  // Effects to be registered at the Module level
+  // ************************************************
 
-  getContact(contactId: string): Observable<Contact> {
-    this.selectContact(contactId);
-
-    return this.loaded$.pipe(
-      take(1),
-      withLatestFrom(this.selectedContact$),
-      switchMap(([loaded, selectedContact]) => {
-        let addContactToList = (contact: Contact) => {
-          if (!selectedContact) {
-            this.store.dispatch(new AddContactAction(contact));
-          }
-        };
-
-        let getContact = (id: string) => this.contactsService
-          .getContact(contactId)
-          .pipe(tap(addContactToList));
-
-        return loaded ? of(null) : getContact(contactId);
+  @Effect() getContacts$ = this.actions$
+    .ofType(ContactsActionTypes.LOAD_CONTACTS).pipe(
+      withLatestFrom(this.loaded$),
+      switchMap(([_, loaded]) => {
+        return loaded
+          ? of(null)
+          : this.contactsService.getContacts();
       }),
-      switchMap(() => this.selectedContact$)
+      map((contacts: Array<Contact> | null) => {
+        return contacts
+          ? new LoadContactsSuccessAction(contacts)
+          : new NoopAction();
+      })
     );
+
+  // Action Decider (Splitter)
+  // It map's one action to an array of actions
+  @Effect() getContactDetails$ = this.actions$
+    .ofType(ContactsActionTypes.LOAD_CONTACT_DETAILS).pipe(
+      map(toPayload),
+      mergeMap(contactId => [
+        new SelectContactAction(contactId),
+        new LoadContactAction(contactId)
+      ])
+    );
+
+  // Action Decider (Content-Based Decider)
+  // A content-based decider uses the payload of an action to map it to a different action
+  @Effect() getContact$ = this.actions$
+    .ofType(ContactsActionTypes.LOAD_CONTACT).pipe(
+      map(toPayload),
+      withLatestFrom(this.loaded$, this.selectedContact$),
+      switchMap(([contactId, loaded, selectedContact]) => {
+        const contactLoaded = selectedContact && selectedContact.id === +contactId;
+
+        return loaded || contactLoaded
+          ? of(null)
+          : this.contactsService.getContact(contactId);
+      }),
+      map((contact: Contact | null) => {
+        return contact
+          ? new AddContactAction(contact)
+          : new NoopAction();
+      })
+    );
+
+  @Effect() updateContact$ = this.actions$
+    .ofType(ContactsActionTypes.UPDATE_CONTACT).pipe(
+      map(toPayload),
+      switchMap((contact: Contact) => this.contactsService.updateContact(contact)),
+      map((contact: Contact) => {
+        this.router.navigate(['/contact', contact.id]);
+        return new UpdateContactSuccessAction(contact)
+      })
+    );
+
+  // ************************************************
+  // Public Code (Action Creators)
+  // ************************************************
+
+  constructor(
+    private actions$: Actions,
+    private store: Store<ApplicationState>,
+    private router: Router,
+    private contactsService: ContactsService
+  ) { }
+
+  getContactDetails(contactId: string): Observable<Contact> {
+    this.store.dispatch(new LoadContactDetailsAction(contactId));
+    return this.selectedContact$;
   }
 
   getContacts(): Observable<Array<Contact>> {
-    return this.loaded$.pipe(
-      take(1),
-      switchMap(loaded => {
-        let addContactsToList = (contacts: Array<Contact>) =>
-          this.store.dispatch(new LoadContactsSuccessAction(contacts));
-
-        let getContacts = () => this.contactsService
-          .getContacts()
-          .pipe(tap(addContactsToList));
-
-        return loaded ? of(null) : getContacts();
-      }),
-      switchMap(() => this.contacts$)
-    );
+    this.store.dispatch(new LoadContactsAction());
+    return this.contacts$;
   }
 
-  updateContact(contact: Contact): Observable<boolean> {
-    /**
-     * Notice, we no longer inject the router and navigate back to
-     * the details view. This is not the responsibility of the facade
-     * but the component.
-     */
-    return this.contactsService.updateContact(contact).pipe(
-      map(() => {
-        this.store.dispatch(new UpdateContactSuccessAction(contact));
-
-        return true;
-      }),
-      catchError(() => of(false))
-    );
-  }
-
-  private selectContact(id: string): void {
-    this.store.dispatch(new SelectContactAction(id));
+  updateContact(contact: Contact): void {
+    this.store.dispatch(new UpdateContactAction(contact));
   }
 }

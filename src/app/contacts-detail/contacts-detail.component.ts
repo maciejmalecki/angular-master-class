@@ -10,12 +10,7 @@ import { ContactsFacade } from '../state/contacts/contacts.facade';
   templateUrl: './contacts-detail.component.html',
   styleUrls: ['./contacts-detail.component.css']
 })
-export class ContactsDetailComponent implements OnInit {
-  contact$: Observable<Contact>;
-
+export class ContactsDetailComponent {
+  contact$: Observable<Contact> = this.contactsFacade.selectedContact$;
   constructor(private contactsFacade: ContactsFacade) { }
-
-  ngOnInit() {
-    this.contact$ = this.contactsFacade.selectedContact$;
-  }
 }

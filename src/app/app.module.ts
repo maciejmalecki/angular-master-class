@@ -5,8 +5,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+
 import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule} from '@ngrx/store-devtools';
+
 import { environment } from '../environments/environment';
 
 import { ContactsMaterialModule } from './contacts-material.module';
@@ -49,7 +52,8 @@ import { ContactsFacade } from './state/contacts/contacts.facade';
     * to compute the next state.
     */
     StoreModule.forRoot(ROOT_REDUCER, { metaReducers: META_REDUCERS }),
-    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 5 }) : []
+    EffectsModule.forRoot([ ContactsFacade ]),
+    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 5 }) : [ ]
   ],
   providers: [
     ContactsFacade,
