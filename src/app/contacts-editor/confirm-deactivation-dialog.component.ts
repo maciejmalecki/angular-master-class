@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'trm-confirm-deactivation-dialog',
   template: `
-    <h3 md-dialog-title>Are you sure?</h3>
-    <div md-dialog-content>All unsaved changes will be gone.</div>
+    <h3 matDialogTitle>Are you sure?</h3>
+    <div mat-dialog-content>All unsaved changes will be gone.</div>
 
-    <md-dialog-actions fxLayout fxLayoutAlign="center center">
-      <button md-button (click)="dialogRef.close(true)">Yes</button>
-      <button md-button md-dialog-close>No</button>
-    </md-dialog-actions>
+    <mat-dialog-actions fxLayout fxLayoutAlign="center center">
+      <button mat-button (click)="dialogRef.close(true)">Yes</button>
+      <button mat-button matDialogClose>No</button>
+    </mat-dialog-actions>
   `
 })
 export class ConfirmDeactivationDialogComponent {
-  constructor(public dialogRef: MdDialogRef<ConfirmDeactivationDialogComponent>) {}
+  constructor(public dialogRef: MatDialogRef<ConfirmDeactivationDialogComponent>) {}
 }

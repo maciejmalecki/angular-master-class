@@ -1,11 +1,11 @@
 <div class="trm-contacts-detail">
-  <md-card>
-    <md-card-title-group class="fullBleed">
-      <img md-card-md-image [src]="contact.image || ''">
-      <md-card-title>{{contact.name}}</md-card-title>
-      <md-card-subtitle>{{contact.email || 'No email address'}}</md-card-subtitle>
-    </md-card-title-group>
-    <md-card-content>
+  <mat-card>
+    <mat-card-title-group class="fullBleed">
+      <img matCardImageMedium [src]="contact.image || ''">
+      <mat-card-title>{{contact.name}}</mat-card-title>
+      <mat-card-subtitle>{{contact.email || 'No email address'}}</mat-card-subtitle>
+    </mat-card-title-group>
+    <mat-card-content>
       <dl>
         <dt>Phone:</dt>
         <dd>{{contact.phone || '-'}}</dd>
@@ -20,10 +20,10 @@
         <dt>City:</dt>
         <dd>{{contact.address.city || '-'}}</dd>
       </dl>
-    </md-card-content>
-    <md-card-actions fxLayout fxLayoutAlign="center center">
-      <button md-button type="button" (click)="edit.emit(contact)">Edit</button>
-      <button md-button *ngIf="showBackButton" type="button" (click)="back.emit()">Go Back</button>
-    </md-card-actions>
-  </md-card>
+    </mat-card-content>
+    <mat-card-actions fxLayout fxLayoutAlign="center center">
+      <button mat-button type="button" (click)="edit.emit(contact)">Edit</button>
+      <button mat-button *ngIf="showBackButton" type="button" (click)="back.emit()">Go Back</button>
+    </mat-card-actions>
+  </mat-card>
 </div>

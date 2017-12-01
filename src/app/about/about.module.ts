@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MaterialModule } from '@angular/material';
+import { ContactsMaterialModule } from '../contacts-material.module';
 
 import { AboutComponent } from './about.component';
 
@@ -11,7 +11,7 @@ import { AboutComponent } from './about.component';
       { path: '', pathMatch: 'full', component: AboutComponent }
     ]),
     FlexLayoutModule,
-    MaterialModule
+    ContactsMaterialModule
   ],
   declarations: [AboutComponent]
 })

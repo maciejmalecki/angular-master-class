@@ -6,17 +6,18 @@
     right: 2em;
     bottom: 2em;
     color: #fff;
+    z-index: 2;
   }
 
 }
 
-/deep/ md-list {
+/deep/ mat-list {
   background-color: white;
   padding-top: 0!important;
 }
 
-/deep/ md-list-item,
-/deep/ [md-list-item] {
+/deep/ mat-list-item,
+/deep/ [mat-list-item] {
   border-bottom: 1px solid #ddd;
   text-decoration: none;
 
@@ -33,7 +34,7 @@
 /deep/ .trm-contacts-creator,
 /deep/ .trm-contacts-editor,
 /deep/ .trm-about {
-  md-card {
+  mat-card {
     max-width: 500px;
     margin: 0 auto;
     margin-top: 2em;
@@ -43,7 +44,7 @@
     }
   }
 
-  md-card-title-group.fullBleed {
+  mat-card-title-group.fullBleed {
     background-color: #afbafc;
     padding: 30px;
     margin-top: -24px;
@@ -56,7 +57,7 @@
     }
   }
 
-  md-card-content {
+  mat-card-content {
     dl {
       margin-top: 2em;
       border-bottom: 1px solid rgba(221, 221, 221, 0.15);
@@ -95,21 +96,21 @@
     padding-left: 1em;
     padding-right: 1em;
 
-    md-input-container {
+    mat-form-field {
       margin-top: 2em;
     }
   }
 
-  md-input-container {
+  mat-form-field {
 
     &.ng-invalid {
 
-      md-hint {
+      mat-hint {
         color: rgb(215, 65, 57);
       }
 
       &.ng-touched:not(.ng-pristine) {
-        /deep/ .md-input-underline {
+        /deep/ .mat-input-underline {
           border-color: rgb(215, 65, 57);
         }
       }
@@ -117,7 +118,7 @@
   }
 }
 
-/deep/ .trm-about md-card img {
+/deep/ .trm-about mat-card img {
   border-radius: 0;
   max-height: 400px;
 }
@@ -126,10 +127,10 @@
   width: 100%;
 }
 
-/deep/ md-dialog-container {
+/deep/ mat-dialog-container {
   font-family: Roboto,"Helvetica Neue",sans-serif;
 
-  [md-dialog-title] {
+  [matDialogTitle] {
     margin-left: -24px;
     margin-right: -24px;
     margin-top: -24px;
@@ -140,20 +141,20 @@
     font-weight: normal;
   }
 
-  [md-dialog-content] {
+  [mat-dialog-content] {
     margin-bottom: 12px;
     margin-top: 36px;
     font-size: 14px;
   }
 }
 
-/deep/ md-dialog-actions {
+/deep/ mat-dialog-actions {
   padding: 8px 0;
-  [md-button],[md-raised-button] {
+  [mat-button],[mat-raised-button] {
     margin: 0 4px;
   }
 }
 
-/deep/ md-tab-group .md-tab-body-wrapper {
+/deep/ mat-tab-group .mat-tab-body-wrapper {
   padding-top: 25px;
 }

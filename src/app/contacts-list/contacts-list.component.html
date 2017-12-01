@@ -1,17 +1,17 @@
-<md-toolbar>
-  <md-input-container dividerColor="accent" class="trm-search-container">
-    <input mdInput [formControl]="terms$" type="text">
-  </md-input-container>
-  <md-icon color="accent">search</md-icon>
-</md-toolbar>
-<md-list>
-  <a md-list-item
+<mat-toolbar>
+  <mat-form-field dividerColor="accent" class="trm-search-container">
+    <input matInput [formControl]="terms$" type="text">
+  </mat-form-field>
+  <mat-icon color="accent">search</mat-icon>
+</mat-toolbar>
+<mat-list>
+  <a mat-list-item
     [routerLink]="['/contact', contact.id]"
     routerLinkActive="active"
     *ngFor="let contact of contacts | async; trackBy:trackByContactId"
     title="View {{contact.name}} details">
 
-    <img md-list-avatar [src]="contact.image" alt="Picture of {{contact.name}}" class="circle">
-    <h3 md-line>{{contact.name}}</h3>
+    <img mat-list-avatar [src]="contact.image" alt="Picture of {{contact.name}}" class="circle">
+    <h3 matLine>{{contact.name}}</h3>
   </a>
-</md-list>
+</mat-list>

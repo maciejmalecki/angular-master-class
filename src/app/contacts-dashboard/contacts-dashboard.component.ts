@@ -3,14 +3,14 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'trm-contacts-dashboard',
   template: `
-    <md-sidenav-container>
-      <md-sidenav mode="side" opened="true">
+    <mat-drawer-container>
+      <mat-drawer mode="side" opened="true">
         <trm-contacts-list></trm-contacts-list>
-      </md-sidenav>
+      </mat-drawer>
       <div class="main-content">
         <router-outlet></router-outlet>
       </div>
-    </md-sidenav-container>
+    </mat-drawer-container>
   `,
   styleUrls: ['./contacts-dashboard.component.css']
 })

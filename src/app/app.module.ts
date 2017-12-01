@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ContactsMaterialModule } from './contacts-material.module';
 
 import { ContactsAppComponent } from './contacts.component';
 import { ContactsListComponent } from './contacts-list/contacts-list.component';
@@ -50,13 +50,13 @@ export function confirmNavigationGuard(component) {
   entryComponents: [ConfirmDeactivationDialogComponent],
   imports: [
     BrowserModule,
-    MaterialModule.forRoot(),
     BrowserAnimationsModule,
     RouterModule.forRoot(APP_ROUTES),
-    FlexLayoutModule.forRoot(),
+    FlexLayoutModule,
     HttpModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ContactsMaterialModule
   ],
   providers: [
     ContactsService,
