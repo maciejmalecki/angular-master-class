@@ -26,5 +26,26 @@
         "https://fonts.googleapis.com/**"
       ]
     }
+  }],
+  "dataGroups": [{
+    "name": "contacts-api",
+    "urls": [
+      "/api/contacts"
+    ],
+    "cacheConfig": {
+      "maxSize": 20,
+      "maxAge": "1d",
+      "strategy": "performance"
+    }
+  }, {
+    "name": "contact-api",
+    "urls": [
+      "/api/contact/*"
+    ],
+    "cacheConfig": {
+      "maxSize": 1,
+      "maxAge": "1d",
+      "strategy": "performance"
+    }
   }]
 }
