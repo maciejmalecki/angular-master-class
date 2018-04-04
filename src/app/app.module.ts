@@ -5,8 +5,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { ContactsMaterialModule } from './contacts-material.module';
+import { environment } from '../environments/environment';
 
 import { ContactsAppComponent } from './app.component';
 import { ContactsListComponent } from './contacts-list/contacts-list.component';
@@ -32,7 +34,8 @@ import { API_ENDPOINT } from './app.tokens';
     FlexLayoutModule,
     RouterModule.forRoot(APP_ROUTES),
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     ContactsService,
