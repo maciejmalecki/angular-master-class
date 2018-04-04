@@ -12,7 +12,8 @@ import {
   MatSidenavModule,
   MatRadioModule,
   MatTabsModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatSnackBarModule
 } from '@angular/material';
 
 @NgModule({
@@ -28,7 +29,8 @@ import {
     MatSelectModule,
     MatSidenavModule,
     MatTabsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSnackBarModule,
   ]
 })
 export class ContactsMaterialModule {}
