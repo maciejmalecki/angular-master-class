@@ -26,7 +26,7 @@ import { API_ENDPOINT } from './app.tokens';
     ContactsEditorComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'trm-contacts-app' }),
     BrowserAnimationsModule,
     ContactsMaterialModule,
     FlexLayoutModule,
