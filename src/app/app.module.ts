@@ -17,13 +17,15 @@ import { ContactsService } from './contacts.service';
 
 import { APP_ROUTES } from './app.routes';
 import { API_ENDPOINT } from './app.tokens';
+import { TooltipComponent } from '@angular/material';
 
 @NgModule({
   declarations: [
     ContactsAppComponent,
     ContactsListComponent,
     ContactsDetailComponent,
-    ContactsEditorComponent
+    ContactsEditorComponent,
+    TooltipComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +40,7 @@ import { API_ENDPOINT } from './app.tokens';
     ContactsService,
     { provide: API_ENDPOINT, useValue: 'http://localhost:4201/api' }
   ],
+  entryComponents: [TooltipComponent],
   bootstrap: [ContactsAppComponent]
 })
 export class ContactsModule {
